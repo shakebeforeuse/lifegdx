@@ -47,7 +47,7 @@ public class Lifegdx extends ApplicationAdapter {
 		shapes.end();
 		
 		batch.begin();
-		font.drawMultiLine(batch, Gdx.graphics.getFramesPerSecond() + " fps \n" + size + " px square \nNextGeneration in " + (toc-tic), size+10.f, size*.5f);
+		font.drawMultiLine(batch, Gdx.graphics.getFramesPerSecond() + " fps \n" + size + " px square \nNextGeneration in " + (toc-tic) + " ms", size+10.f, size*.5f);
 		batch.end();
 		
 		tic = System.currentTimeMillis();
