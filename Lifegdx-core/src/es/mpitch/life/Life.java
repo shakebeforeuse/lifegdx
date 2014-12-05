@@ -12,6 +12,7 @@ public class Life implements Runnable
 	private static int size;
 	private static int cores = Runtime.getRuntime().availableProcessors();
 	private static ExecutorService threadPool = Executors.newFixedThreadPool(cores);
+	private static Runnable[] tasks = new Runnable[cores];
 	private static CyclicBarrier barrier = new CyclicBarrier(cores + 1);
 	private int beginX;
 	private int endX;
@@ -51,6 +52,21 @@ public class Life implements Runnable
 			
 		this.beginX = 0;
 		this.endX   = size;
+		
+		int parts = size/cores;
+		
+		for (int i = 0; i < cores; ++i)
+		{
+			int beginX = i*parts;
+			int endX;
+			
+			if (i+1 == cores)
+				endX = size;
+			else
+				endX = (i+1)*parts;
+			
+			tasks[i] = new Life(size, beginX, endX);
+		}
 	}
 	
 	public Life(int size, int beginX, int endX)
@@ -120,22 +136,10 @@ public class Life implements Runnable
 	
 	public static void nextGeneration()
 	{
-		int parts = size/cores;
-		
 		nextGrid = new boolean[size][size];
 		
 		for (int i = 0; i < cores; ++i)
-		{
-			int beginX = i*parts;
-			int endX;
-			
-			if (i+1 == cores)
-				endX = size;
-			else
-				endX = (i+1)*parts;
-			
-			threadPool.execute(new Life(size, beginX, endX));
-		}
+			threadPool.execute(tasks[i]);
 		
 		try
 		{

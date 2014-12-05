@@ -4,20 +4,28 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 public class Lifegdx extends ApplicationAdapter {
 	
 	ShapeRenderer shapes;
+	SpriteBatch batch;
+	BitmapFont font;
 	Life life;
 	int size;
+	double tic = 0;
+	double toc = 0;
 	
 	@Override
 	public void create () {
 		shapes = new ShapeRenderer();
 		size = Math.min(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		life = new Life(size);
+		font = new BitmapFont();
+		batch = new SpriteBatch(100);
 	}
 
 	@Override
@@ -38,7 +46,13 @@ public class Lifegdx extends ApplicationAdapter {
 		
 		shapes.end();
 		
+		batch.begin();
+		font.drawMultiLine(batch, Gdx.graphics.getFramesPerSecond() + " fps \n" + size + " px square \nNextGeneration in " + (toc-tic), size+10.f, size*.5f);
+		batch.end();
+		
+		tic = System.currentTimeMillis();
 		Life.nextGeneration();
+		toc = System.currentTimeMillis();
 	}
 	
 	@Override
