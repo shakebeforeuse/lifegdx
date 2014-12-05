@@ -29,14 +29,12 @@ public class Lifegdx extends ApplicationAdapter {
 		
 		shapes.begin(ShapeType.Filled);
 		
+		shapes.rect(0, 0, size, size, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK);
+		
 		for (int i=0; i<size; ++i)
-		{
 			for (int j=0; j<size; ++j)
-			{
-				Color color = (grid[j][i]? Color.WHITE : Color.BLACK);
-				shapes.rect(i, j, 1, 1, color, color, color, color);
-			}
-		}
+				if (grid[j][i])
+					shapes.rect(i, j, 1, 1, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE);
 		
 		shapes.end();
 		
