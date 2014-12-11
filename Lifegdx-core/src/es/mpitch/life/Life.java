@@ -15,7 +15,7 @@ public class Life implements Runnable
 	/** Cell's grid, represents states of each cell, being 'true' alive and 'false' dead. */
 	private static boolean[][] grid;
 	
-	/** Auxiliar grid, necessary to save the next generation without collisions */
+	/** Auxiliary grid, necessary to save the next generation without collisions */
 	private static boolean[][] nextGrid;
 	
 	/** Size of our grid. It has to be square at the moment. */
